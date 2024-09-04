@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use(
 cors({
-origin: "https://bamstoreng.netlify.app 11", 
+origin: "http://localhost:5173", 
 credentials: true, 
 methods: ["GET", "OST", "PUT", "DELETE", "PATCH", "OPTIONS"],
 allowedHeaders: [
