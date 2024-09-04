@@ -111,7 +111,7 @@ export const checkout = async (req, res) => {
 
       
 
-        const imageUrl = `${req.protocol}://${req.get('host')}/${course.image}`;
+        
         
   const session = await instance.checkout.sessions.create({ 
     payment_method_types: ["card"], 
@@ -122,7 +122,7 @@ export const checkout = async (req, res) => {
           product_data: { 
               name: course.title, 
               description: course.description, 
-              images: [imageUrl],
+              images: [course.image],
           }, 
           unit_amount: course.price * 100, 
         }, 
@@ -130,7 +130,7 @@ export const checkout = async (req, res) => {
       }, 
     ], 
     mode: "payment", 
-    success_url: `${process.env.FRONTEND_URL}/verify/{CHECKOUT_SESSION_ID}`, 
+    success_url: `${process.env.FRONTEND_URL}/verify/${CHECKOUT_SESSION_ID}`, 
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     metadata: {
                 userId: req.user._id.toString(),

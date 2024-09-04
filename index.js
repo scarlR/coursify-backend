@@ -15,26 +15,13 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// app.use(
-//   cors({
-//     origin: "*", 
-//     credentials: true, // Allow cookies to be sent with requests
-//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-//     allowedHeaders: [
-//       "Origin",
-//       "Content-Type",
-//       "Accept",
-//       "Authorization",
-//       "X-Requested-With",
-//     ],
-//   })
-// );
+
 
 app.options("*", cors({ origin: '*', optionsSuccessStatus: 200 }));
 
 app.use(cors({ origin: "*", optionsSuccessStatus: 200 }));
 
-// app.options('*', cors());
+
 
 
 export const instance =stripe(process.env.STRIPE_SECRET)
