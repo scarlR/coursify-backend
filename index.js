@@ -16,10 +16,21 @@ const app = express();
 app.use(express.json());
 
 app.use(
-    cors({
-      origin:"*"
+  cors({
+    origin: "*", // Your frontend URL
+    credentials: true, // Allow cookies to be sent with requests
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: [
+      "Origin",
+      "Content-Type",
+      "Accept",
+      "Authorization",
+      "X-Requested-With",
+    ],
   })
 );
+
+app.options('*', cors());
 
 
 export const instance =stripe(process.env.STRIPE_SECRET)
