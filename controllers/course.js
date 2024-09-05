@@ -97,6 +97,7 @@ export const getMyCourses = async (req, res) => {
 }
 
 export const checkout = async (req, res) => {
+    console.log("jii")
     try {
           
         const user = await User.findById(req.user._id);
@@ -130,14 +131,14 @@ export const checkout = async (req, res) => {
       }, 
     ], 
     mode: "payment", 
-    success_url: `${process.env.FRONTEND_URL}/success`, 
+    success_url: "http://localhost:5173/success", 
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     metadata: {
                 userId: req.user._id.toString(),
                 courseId: course._id.toString(),
             }
           });
-        
+        console.log(session)
 //         const checkoutObject = {
 // /* Specify different payment method */
 // payment_method_types: ['card'],
