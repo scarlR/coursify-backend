@@ -110,7 +110,7 @@ export const checkout = async (req, res) => {
          })
         }
 
-      
+      console.log(user,course)
 
         
         
@@ -173,7 +173,9 @@ export const checkout = async (req, res) => {
         
     } catch (error) {
         return res.status(500).json({
-             message:"problem in checkout"
+            message: "problem in checkout",
+            error
+            
          })
     }
 }
