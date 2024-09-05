@@ -131,7 +131,7 @@ export const checkout = async (req, res) => {
       }, 
     ], 
     mode: "payment", 
-    success_url: "http://localhost:5173/success", 
+    success_url:  `${process.env.FRONTEND_URL}/success`,
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     metadata: {
                 userId: req.user._id.toString(),
