@@ -130,13 +130,43 @@ export const checkout = async (req, res) => {
       }, 
     ], 
     mode: "payment", 
-    success_url: `${process.env.FRONTEND_URL}/verify/${CHECKOUT_SESSION_ID}`, 
+    success_url: `${process.env.FRONTEND_URL}/success`, 
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     metadata: {
                 userId: req.user._id.toString(),
                 courseId: course._id.toString(),
             }
-  }); 
+          });
+        
+//         const checkoutObject = {
+// /* Specify different payment method */
+// payment_method_types: ['card'],
+// line_items: [ 
+//       { 
+//         price_data: { 
+//           currency: "INR", 
+//           product_data: { 
+//               name: course.title, 
+//               description: course.description, 
+//               images: [course.image],
+//           }, 
+//           unit_amount: course.price * 100, 
+//         }, 
+//         quantity: 1, 
+//       }, 
+//     ], 
+// metadata: {
+//     userId: req.user._id.toString(),
+//      courseId: course._id.toString(),
+//  /* any meta data for your ref */
+// },
+// customer: customer.customerId,
+// mode: "payment", // payment, subscription etc
+// success_url: `${process.env.FRONTEND_URL}/success`, 
+// cancel_url:`${process.env.FRONTEND_URL}/cancel`, 
+// }
+
+// const session = await instance.checkout.sessions.create(checkoutObject)
        
         res.json({ id: session.id }); 
         
