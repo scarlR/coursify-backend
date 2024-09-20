@@ -12,23 +12,26 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 export const createCourse = async (req, res) => {
     try {
         const { title, description, price, duration, category, createdBy } = req.body;
-        console.log("Request body:", req.body);
+         console.log(req.body);
+        const image = req.file;
+        console.log("image",image);
 
         if (!title || !description || !price || !duration || !category || !createdBy) {
             return res.status(400).json({ message: "All fields are required" });
         }
+         console.log(req.body, req.file);
 
-        if (!req.file) {
+        if (!image) {
             return res.status(400).json({ message: "Image file is required" });
         }
+ console.log("hhr",req.body, req.file);
 
-        console.log("Uploaded file:", req.file);
-
-        const uploadResult = await uploadOnCloudinary(req.file);
+    const uploadResult = await uploadOnCloudinary(image.path);
 
         if (!uploadResult) {
             return res.status(500).json({ message: "Failed to upload image" });
         }
+        console.log("lll",req.body, req.file, uploadResult);
 
         const newCourse = await Course.create({
             title,
@@ -37,7 +40,7 @@ export const createCourse = async (req, res) => {
             duration,
             category,
             createdBy,
-            image: uploadResult.url,
+            image: uploadResult.secure_url,
         });
 
         res.status(201).json({
@@ -52,7 +55,6 @@ export const createCourse = async (req, res) => {
         });
     }
 };
-
 export const addLecture = async (req, res) => {
     try {
        

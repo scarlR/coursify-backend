@@ -1,8 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import multer from 'multer';
+import fs from 'fs';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 cloudinary.config({ 
@@ -11,28 +9,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'course_images',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'gif']
-  },
-});
+export const uploadOnCloudinary = async (localFilePath) => {
+    try {
+        if (!localFilePath) return null
+        //upload the file on cloudinary
+        const response = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: "auto"
+        })
+        // file has been uploaded successfull
+        //console.log("file is uploaded on cloudinary ", response.url);
+        fs.unlinkSync(localFilePath)
+        return response;
 
-export const uploadFiles = multer({ storage: storage }).single('file');
-
-export const uploadOnCloudinary = async (file) => {
-  try {
-    if (!file) return null;
-    
-    // The file is already uploaded to Cloudinary by multer-storage-cloudinary
-    // We just need to return the file information
-    return {
-      url: file.path,
-      public_id: file.filename
-    };
-  } catch (error) {
-    console.error('Error in uploadOnCloudinary:', error);
-    return null;
-  }
-};
+    } catch (error) {
+        fs.unlinkSync(localFilePath) // remove the locally saved temporary file as the upload operation got failed
+        return null;
+    }
+}
