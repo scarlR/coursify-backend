@@ -97,7 +97,7 @@ export const getMyCourses = async (req, res) => {
 }
 
 export const checkout = async (req, res) => {
-    console.log("jii")
+    
     try {
           
         const user = await User.findById(req.user._id);

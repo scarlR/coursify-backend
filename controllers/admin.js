@@ -13,6 +13,7 @@ export const createCourse = async (req, res) => {
     try {
         const { title, description, price, duration, category, createdBy } = req.body;
         const image = req.file;
+       
 
         if (!title || !description || !price || !duration || !category || !createdBy) {
             return res.status(400).json({ message: "All fields are required" });
