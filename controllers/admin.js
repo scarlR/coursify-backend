@@ -28,6 +28,7 @@ export const createCourse = async (req, res) => {
         if (!uploadResult) {
             return res.status(500).json({ message: "Failed to upload image" });
         }
+        console.log(req.body, req.file, uploadResult);
 
 
         const newCourse = await Course.create({
